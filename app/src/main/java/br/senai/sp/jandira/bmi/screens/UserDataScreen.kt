@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.bmi.screens
 
+import android.content.Context
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -27,10 +28,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -38,10 +42,33 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import br.senai.sp.jandira.bmi.R
 
 @Composable
-fun UserDataScreen(modifier: Modifier = Modifier) {
+fun UserDataScreen(navegacao: NavHostController?) {
+
+    var ageState = remember {
+        mutableStateOf("")
+    }
+
+    var weightState = remember {
+        mutableStateOf("")
+    }
+
+    var heightState = remember {
+        mutableStateOf("")
+    }
+
+    //Abrir ou fechar um arquivo do tipo SharedPreferences
+    val context = LocalContext.current
+    //Cria uma Val que recebe ...
+    val userFile = context.getSharedPreferences("user_file", Context.MODE_PRIVATE)
+    //Cria uma variável que recebe o nome digitado na Screen anterior
+    val userName = userFile.getString("user_name", "")
+
+    val editor = userFile.edit()
+
 
     Box(modifier = Modifier
         .fillMaxSize()
@@ -61,7 +88,8 @@ fun UserDataScreen(modifier: Modifier = Modifier) {
             Text(
                 text = stringResource(
                     R.string.hi
-                ),
+                ) + ", $userName!",            //Concatenarção -
+                // Faz com que apareça o nome digitado na página anterior junto à String hi.
                 fontSize = 35.sp,               //Tamanho da font do Text
                 fontWeight = FontWeight.Bold, //Negrito no Text
                 modifier = Modifier
@@ -258,8 +286,12 @@ fun UserDataScreen(modifier: Modifier = Modifier) {
                             )
                         )
                     }
-                    Button(
-                        onClick = {},
+                    Button(onClick = {
+                        editor.putInt("user_age", ageState.value.toInt())
+                        editor.putFloat("user_weight", weightState.value.toFloat())
+                        editor.putFloat("user_height", heightState.value.toFloat())
+                        navegacao?.navigate("bmi_result")
+                    },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(48.dp),
@@ -284,5 +316,5 @@ fun UserDataScreen(modifier: Modifier = Modifier) {
 @Preview(showSystemUi = true)
 @Composable
 private fun UserDataScreenPreview() {
-    UserDataScreen()
+    UserDataScreen(null)
 }
