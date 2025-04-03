@@ -14,4 +14,13 @@
     <string name="result">30,6</string>
     <string name="class1">Vous souffrez d’obésité de classe I.</string>
     <string name="new_calc">Nouveau calcul</string>
+
+
+    <!-- Text's da tela BMIResultScreen, para os níveis de IMC/BMI-->
+    <string name="under_weight">Vous êtes en dessous de votre poids idéal!</string>
+    <string name="normal_weight">Vous avez un poids corporel normal!</string>
+    <string name="over_weight">Vous êtes légèrement en surpoids!</string>
+    <string name="class1_weight">Vous avez une obésité de classe I!</string>
+    <string name="class2_weight">Vous avez une obésité de classe II!</string>
+    <string name="class3_weight">Vous avez une obésité de classe III!</string>
 </resources>

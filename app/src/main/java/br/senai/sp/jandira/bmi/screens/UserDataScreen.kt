@@ -48,14 +48,17 @@ import br.senai.sp.jandira.bmi.R
 @Composable
 fun UserDataScreen(navegacao: NavHostController?) {
 
+    //Recebe o valor digitado pelo usuário
     var ageState = remember {
         mutableStateOf("")
     }
 
+    //Recebe o valor digitado pelo usuário
     var weightState = remember {
         mutableStateOf("")
     }
 
+    //Recebe o valor digitado pelo usuário
     var heightState = remember {
         mutableStateOf("")
     }
@@ -213,8 +216,8 @@ fun UserDataScreen(navegacao: NavHostController?) {
                             .fillMaxWidth()
                     ){
                         OutlinedTextField(
-                            value = "",
-                            onValueChange = {},
+                            value = ageState.value,
+                            onValueChange = {ageState.value = it},
                             modifier = Modifier
                                 .fillMaxWidth(),
                             leadingIcon = {
@@ -237,8 +240,8 @@ fun UserDataScreen(navegacao: NavHostController?) {
                             )
                         )
                         OutlinedTextField(
-                            value = "",
-                            onValueChange = {},
+                            value = weightState.value, //-------------
+                            onValueChange = {weightState.value = it},
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 16.dp),
@@ -262,8 +265,8 @@ fun UserDataScreen(navegacao: NavHostController?) {
                             )
                         )
                         OutlinedTextField(
-                            value = "",
-                            onValueChange = {},
+                            value = heightState.value,
+                            onValueChange = {heightState.value = it},
                             modifier = Modifier
                                 .fillMaxWidth(),
                             leadingIcon = {
@@ -286,12 +289,14 @@ fun UserDataScreen(navegacao: NavHostController?) {
                             )
                         )
                     }
-                    Button(onClick = {
-                        editor.putInt("user_age", ageState.value.toInt())
-                        editor.putFloat("user_weight", weightState.value.toFloat())
-                        editor.putFloat("user_height", heightState.value.toFloat())
-                        navegacao?.navigate("bmi_result")
-                    },
+                    Button(
+                        onClick = {
+                            editor.putInt("user_age", ageState.value.toInt())
+                            editor.putFloat("user_weight", weightState.value.toFloat())
+                            editor.putFloat("user_height", heightState.value.toFloat())
+                            editor.apply()
+                            navegacao?.navigate("bmi_result")
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(48.dp),
