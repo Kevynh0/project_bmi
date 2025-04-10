@@ -36,6 +36,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import br.senai.sp.jandira.bmi.R
+import br.senai.sp.jandira.bmi.calcs.bmiCalculate
+import br.senai.sp.jandira.bmi.utils.numberConvertToLocale
 
 @Composable
 fun  BMIResultScreen(navegacao: NavHostController?) {
@@ -45,6 +47,12 @@ fun  BMIResultScreen(navegacao: NavHostController?) {
     val userAge = userFile.getInt("user_age", 0)
     val userHeight = userFile.getFloat("user_height", 0.0f)
     val userWeight = userFile.getFloat("user_weight", 0.0f)
+
+
+    // Obter os dados do IMC do usuário
+    val result = bmiCalculate(userWeight.toInt(),
+                           userHeight.toDouble().div(100)
+    )
 
     Box(modifier = Modifier
         .fillMaxSize()
@@ -100,12 +108,7 @@ fun  BMIResultScreen(navegacao: NavHostController?) {
                         shape = CircleShape,                //Transforma o quadrado em circulo
                         border = BorderStroke(              //Faz a borda da borda rsrs
                             width = 7.dp,                   //Grossura do traço da borda
-                            brush = Brush.linearGradient(   //Faz o Gradient entre duas ou mais cores
-                                listOf(
-                                    Color(0xFF008EFF),
-                                    Color(0x2000BBFF)
-                                )
-                            )
+                            color = result.color
                         )
                     ){
                         Column(
@@ -115,23 +118,19 @@ fun  BMIResultScreen(navegacao: NavHostController?) {
                             horizontalAlignment = Alignment.CenterHorizontally
                         ){
                             Text(
-                                text = stringResource(
-                                    R.string.result
-                                ),
+                                text = numberConvertToLocale(result.bmi.second),
                                 fontSize = 40.sp,                 //Aumenta o tamanho do número
                                 fontWeight = FontWeight.ExtraBold //Coloca o número em negrito
                             )
                         }
                     }
                     Text(
-                        text = stringResource(
-                            R.string.class1
-                        ),
+                        text = result.bmi.first,
                         modifier = Modifier
                             .padding(top = 15.dp),
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color.Black
+                        color = result.color
 
 
                     )

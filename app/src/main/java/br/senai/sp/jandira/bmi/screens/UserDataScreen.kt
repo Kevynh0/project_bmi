@@ -38,6 +38,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -236,7 +237,8 @@ fun UserDataScreen(navegacao: NavHostController?) {
                             },
                             shape = RoundedCornerShape(16.dp),
                             keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.Number
+                                keyboardType = KeyboardType.Number,
+                                imeAction = ImeAction.Next
                             )
                         )
                         OutlinedTextField(
@@ -261,7 +263,8 @@ fun UserDataScreen(navegacao: NavHostController?) {
                             },
                             shape = RoundedCornerShape(16.dp),
                             keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.Number
+                                keyboardType = KeyboardType.Number,
+                                imeAction = ImeAction.Next
                             )
                         )
                         OutlinedTextField(
@@ -285,7 +288,8 @@ fun UserDataScreen(navegacao: NavHostController?) {
                             },
                             shape = RoundedCornerShape(16.dp),
                             keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.Number
+                                keyboardType = KeyboardType.Number,
+                                imeAction = ImeAction.Done
                             )
                         )
                     }
